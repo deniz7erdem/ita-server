@@ -11,6 +11,8 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/role.enum';
 
 @ApiTags('User')
 @Controller('user')
@@ -23,8 +25,15 @@ export class UserController {
   }
 
   @Get()
+  @Roles(Role.Admin)
   findAll() {
     return this.userService.findAll();
+  }
+
+  @Get('byEmail/:email')
+  @Roles(Role.Client)
+  findByEmail(@Param('email') email: string) {
+    return this.userService.findOneByEmail(email);
   }
 
   @Patch(':id')
