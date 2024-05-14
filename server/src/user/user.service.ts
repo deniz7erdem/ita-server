@@ -26,7 +26,6 @@ export class UserService {
   findOneByEmail(email: string) {
     return this.userRepository.findOne({
       where: { email },
-      select: ['id', 'name', 'email'],
     });
   }
 

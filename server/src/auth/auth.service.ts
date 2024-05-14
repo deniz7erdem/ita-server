@@ -12,7 +12,11 @@ export class AuthService {
   ) {}
 
   async loginUser(loginDto: loginDto) {
-    const user = await this.userService.findOneByEmail(loginDto.mail);
+    console.log(loginDto);
+
+    const user = await this.userService.findOneByEmail(loginDto.email);
+    console.log(user);
+
     if (!user) {
       throw new UnauthorizedException('Wrong mail/password');
     }

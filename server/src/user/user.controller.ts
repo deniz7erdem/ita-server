@@ -30,11 +30,11 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get('byEmail/:email')
-  @Roles(Role.Client)
-  findByEmail(@Param('email') email: string) {
-    return this.userService.findOneByEmail(email);
-  }
+  // @Get('byEmail/:email')
+  // @Roles(Role.Client)
+  // findByEmail(@Param('email') email: string) {
+  //   return this.userService.findOneByEmail(email);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
