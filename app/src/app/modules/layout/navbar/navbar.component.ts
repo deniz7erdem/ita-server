@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
@@ -8,4 +8,9 @@ import { AuthService } from '../../auth/services/auth.service';
 })
 export class NavbarComponent {
   constructor(public authService: AuthService) {}
+  @Output() onHide = new EventEmitter<boolean>();
+
+  sidebarToggle() {
+    this.onHide.emit(true);
+  }
 }

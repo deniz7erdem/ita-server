@@ -1,3 +1,7 @@
-<div class="sb-nav-fixed">
-  <app-navbar></app-navbar> <app-sidenav></app-sidenav>
+<div
+  class="sb-nav-fixed"
+  [ngClass]="{ 'sb-sidenav-toggled': sbSidenavToggled == 'true' }"
+>
+  <app-navbar (onHide)="changeSidebarToggled()"></app-navbar>
+  <app-sidenav></app-sidenav>
 </div>

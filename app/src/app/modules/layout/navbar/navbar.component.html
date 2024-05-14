@@ -5,6 +5,7 @@
   <button
     class="btn btn-link btn-lg order-1 order-lg-0 me-4 me-lg-0"
     id="sidebarToggle"
+    (click)="sidebarToggle()"
   >
     <i class="bi bi-list"></i>
   </button>
@@ -23,7 +24,11 @@
         <li ngbDropdownItem><a class="dropdown-item">Settings</a></li>
         <li ngbDropdownItem><a class="dropdown-item">Activity Log</a></li>
         <li ngbDropdownItem><hr class="dropdown-divider" /></li>
-        <li ngbDropdownItem><button (click)="this.authService.logout()" class="dropdown-item">Logout</button></li>
+        <li ngbDropdownItem>
+          <button (click)="this.authService.logout()" class="dropdown-item">
+            Logout
+          </button>
+        </li>
       </ul>
     </li>
   </ul>
