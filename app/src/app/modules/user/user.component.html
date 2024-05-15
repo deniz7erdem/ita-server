@@ -1,21 +1,28 @@
 <div class="mt-2">
   <p-card header="Hesaplar">
     <p-table
-      #dt1
       [value]="users"
-      dataKey="id"
-      [rows]="10"
-      [rowsPerPageOptions]="[10, 25, 50]"
-      [loading]="loading"
       [paginator]="true"
-      [globalFilterFields]="[
-        'name',
-        'country.name',
-        'representative.name',
-        'status'
-      ]"
+      [rows]="5"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [rowsPerPageOptions]="[5, 10, 20]"
     >
-
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 25%">#</th>
+          <th style="width: 25%">İsim</th>
+          <th style="width: 25%">E-Posta</th>
+          <th style="width: 25%">Oluşturma Tarihi</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-users>
+        <tr>
+          <td>{{ users.id }}</td>
+          <td>{{ users.name }}</td>
+          <td>{{ users.email }}</td>
+          <td>{{ users.createdAt }}</td>
+        </tr>
+      </ng-template>
     </p-table>
   </p-card>
 </div>
