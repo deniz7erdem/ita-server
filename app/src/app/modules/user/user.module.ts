@@ -3,19 +3,15 @@ import { CommonModule } from '@angular/common';
 import { UserComponent } from './user.component';
 import { CrudUserComponent } from './crud-user/crud-user.component';
 import { UserRoutingModule } from './user-routing.module';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
+import { NgbPagination, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [UserComponent, CrudUserComponent],
   imports: [
     CommonModule,
     FormsModule,
     UserRoutingModule,
-    CardModule,
-    ButtonModule,
-    TableModule,
+    NgbPaginationModule
   ],
 })
 export class UserModule {}

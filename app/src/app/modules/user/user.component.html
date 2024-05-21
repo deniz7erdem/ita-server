@@ -1,30 +1,51 @@
 <div class="mt-3">
-  <p-card header="Hesaplar">
-    <p-table
-      [value]="users"
-      [paginator]="true"
-      [rows]="5"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      [rowsPerPageOptions]="[5, 10, 20]"
-    >
-      <ng-template pTemplate="header">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center p-3">
+        <div>
+          <h3>Kullanıcılar</h3>
+        </div>
+        <div>
+          <button class="btn btn-primary">Yeni Hesap Ekle</button>
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <th style="width: 25%">#</th>
-          <th style="width: 25%">İsim</th>
-          <th style="width: 25%">E-Posta</th>
-          <th style="width: 25%">Oluşturma Tarihi</th>
-          <th>İşlemler</th>
+          <th scope="col">#</th>
+          <th scope="col">İsim</th>
+          <th scope="col">E-Posta</th>
+          <th scope="col">Oluşturma Tarihi</th>
         </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-users>
-        <tr>
-          <td>{{ users.id }}</td>
-          <td>{{ users.name }}</td>
-          <td>{{ users.email }}</td>
-          <td>{{ users.createdAt }}</td>
-          <td><button class="btn btn-warning rounded-circle"><i class="bi bi-pen"></i></button></td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </p-card>
+      </thead>
+      <tbody>
+        @for (user of users; track user.name) {
+          <tr>
+            <th scope="row">{{ user.id }}</th>
+            <td>
+              {{ user.name }}
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.createdAt }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+      >
+      </ngb-pagination>
+    
+      <select class="form-select" style="width: auto" [(ngModel)]="pageSize">
+        <option [ngValue]="2">2 items per page</option>
+        <option [ngValue]="4">4 items per page</option>
+        <option [ngValue]="6">6 items per page</option>
+      </select>
+    </div>
+  </div>
 </div>

@@ -10,12 +10,15 @@ export class UserComponent {
   constructor(private userService: UserService) {}
   users: any;
   loading: boolean = true;
-  searchValue: string | undefined;
+  page = 1;
+  pageSize = 4;
+  collectionSize = 0;
   ngOnInit() {
     this.userService.getAll().subscribe((data) => {
       console.log(data);
       this.users = data;
       this.loading = false;
+      this.collectionSize = this.users.length;
     });
   }
 }
