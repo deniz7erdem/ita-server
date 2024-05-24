@@ -6,9 +6,15 @@ export const SidebarItems: SideBarHead[] = [
     items: [{ label: 'Anasayfa', icon: 'columns', link: '/dashboard' }],
   },
   {
+    label:'İstemciler',
+    items: [
+      { label: 'İstemci Listesi', icon: 'pc-display', link: '/client' }
+    ],
+  },
+  {
     label: 'İşlemler',
     items: [
-      { label: 'Hesapları Yönet', icon: 'person', link: '/user' }
+      { label: 'Hesapları Yönet', icon: 'people', link: '/user' }
     ],
   }
 ];
