@@ -16,4 +16,18 @@ export class UserService {
       },
     });
   }
+  create(user: any) {
+    return this.http.post(`${this.apiUrl}/user`, user, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    });
+  }
+  update(user: any) {
+    return this.http.put(`${this.apiUrl}/user`, user, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    });
+  }
 }

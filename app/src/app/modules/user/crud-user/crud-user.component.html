@@ -1,1 +1,38 @@
-<p>crud-user works!</p>
+<div class="modal-header">Kullanıcı {{ user ? "Düzenle" : "Ekle" }}</div>
+<div class="modal-body">
+  <form [formGroup]="userForm">
+    <div class="mb-3">
+      <label for="name" class="form-label"> İsim </label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label"> E-Posta </label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label"> Parola </label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+      />
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="save()">Kaydet</button>
+    <button class="btn btn-secondary" (click)="activeModal.close()">
+      Kapat
+    </button>
+  </div>
+</div>
