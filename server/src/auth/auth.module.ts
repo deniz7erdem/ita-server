@@ -8,10 +8,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
+import { ClientService } from 'src/client/client.service';
+import { Client } from 'src/client/entities/client.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User,Client]),
     ConfigModule.forRoot(),
     JwtModule.register({
       global: true,
@@ -24,6 +26,7 @@ import { AuthGuard } from './auth.guard';
     AuthService,
     { provide: APP_GUARD, useClass: AuthGuard },
     UserService,
+    ClientService,
   ],
 })
 export class AuthModule {}
