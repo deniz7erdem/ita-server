@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { ClientModule } from './client/client.module';
 import { User } from './user/entities/user.entity';
 import { Client } from './client/entities/client.entity';
+import { SocketGateway } from './socket/socket.gateway';
 
 @Module({
   imports: [
@@ -30,6 +31,6 @@ import { Client } from './client/entities/client.entity';
     ClientModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SocketGateway],
 })
 export class AppModule {}
