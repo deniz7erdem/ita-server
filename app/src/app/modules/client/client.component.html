@@ -5,6 +5,9 @@
         <h2>İstemci Listesi</h2>
       </div>
       <div>
+        <span class="badge bg-success me-2"
+          >Toplam İstemci: {{ onlineClients | async }}</span
+        >
         <button class="btn btn-primary">İstemci Ekle</button>
       </div>
     </div>
@@ -18,22 +21,26 @@
               <th scope="col">İşletim Sistemi</th>
               <th scope="col">IP</th>
               <th scope="col">Durumu</th>
+              <th scope="col">Oluşturma Tarihi</th>
               <th scope="col">İşlemler</th>
             </tr>
           </thead>
           <tbody>
+            @for (client of clients; track client.id) {
             <tr>
-              <td>1</td>
-              <td>MDBF - 1</td>
+              <td>{{ client.id }}</td>
+              <td>{{ client.name }}</td>
               <td>Ubuntu 22.04 (LTS) x64</td>
               <td>192.168.1.10</td>
               <td><span class="badge bg-success">Aktif</span></td>
+              <td>{{ client.createdAt.toLocaleString() }}</td>
               <td>
                 <button class="btn btn-secondary">
                   <i class="bi bi-sliders"></i>
                 </button>
               </td>
             </tr>
+            }
           </tbody>
         </table>
       </div>
