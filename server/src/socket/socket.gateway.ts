@@ -7,12 +7,12 @@ import {
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class SocketGateway {
   @WebSocketServer() server: Server;
   private logger: Logger = new Logger('AppGateway');
   private clients: Map<any, any> = new Map();
-
+  private onlineClients: number = 0;
   constructor(private jwtService: JwtService) {}
 
   @SubscribeMessage('message')
@@ -29,18 +29,22 @@ export class SocketGateway {
 
     try {
       const payload = this.jwtService.verify(token);
+      console.log(payload);
+      if (payload.role == 'admin') {
+        this.server.emit('onlineClients', this.onlineClients);
+        return;
+      }
       this.clients.set(payload.id, client.id);
-      this.server.emit('onlineClients', this.clients.size);
+      this.server.emit('onlineClients', ++this.onlineClients);
       this.logger.log(`Client connected: ${client.id}, User ID: ${payload.id}`);
     } catch (error) {
       client.disconnect();
     }
   }
 
-
   handleDisconnect(client: Socket) {
     this.clients.delete(client.id);
-    this.server.emit('onlineClient', this.clients.size);
+    this.server.emit('onlineClients', --this.onlineClients);
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
@@ -49,10 +53,7 @@ export class SocketGateway {
   }
 
   sendScriptToPython(clientId: number, script: string) {
-    console.log(this.clients.size);
     const clientSocketId = this.clients.get(clientId);
-
-
     if (clientSocketId) {
       this.server.to(clientSocketId).emit('runScript', script);
       this.logger.log(`Script sent to Python client`);
