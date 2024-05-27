@@ -43,6 +43,13 @@ export class SocketGateway {
   }
 
   handleDisconnect(client: Socket) {
+    const token = client.handshake.headers.authorization?.split(' ')[1];
+    const payload = this.jwtService.verify(token);
+    console.log(payload);
+    if (payload.role == 'admin') {
+      this.server.emit('onlineClients', this.onlineClients);
+      return;
+    }
     this.clients.delete(client.id);
     this.server.emit('onlineClients', --this.onlineClients);
     this.logger.log(`Client disconnected: ${client.id}`);

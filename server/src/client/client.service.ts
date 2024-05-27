@@ -26,7 +26,9 @@ export class ClientService {
   }
 
   findAll() {
-    return this.clientRepository.find();
+    return this.clientRepository.find({
+      select: ['id', 'name', 'os', 'createdAt', 'updatedAt', 'deletedAt'],
+    });
   }
 
   findOne(id: number) {
@@ -39,6 +41,10 @@ export class ClientService {
 
   update(id: number, updateClientDto: UpdateClientDto) {
     return `This action updates a #${id} client`;
+  }
+
+  updateOS(token: string, os: string) {
+    return this.clientRepository.update({ token }, { os });
   }
 
   remove(id: number) {

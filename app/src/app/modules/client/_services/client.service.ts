@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import io from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { Client } from '../../../models/client.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,11 @@ import { Observable } from 'rxjs';
 export class ClientService {
   constructor(private http: HttpClient) {}
   apiUrl = environment.api;
-  private socket = io(this.apiUrl,{extraHeaders: {Authorization: `Bearer ${localStorage.getItem('authToken')}`}});
+  private socket = io(this.apiUrl, {
+    extraHeaders: {
+      Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+    },
+  });
 
   getOnlineClients(): Observable<any> {
     return new Observable((observer) => {
@@ -20,8 +25,16 @@ export class ClientService {
     });
   }
 
-  getAll() {
-    return this.http.get(`${this.apiUrl}/client`, {
+  getAll(): Observable<Client[]> {
+    return this.http.get<Client[]>(`${this.apiUrl}/client`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    });
+  }
+
+  create(data: { name: string }): Observable<Client> {
+    return this.http.post<Client>(`${this.apiUrl}/client`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('authToken')}`,
       },

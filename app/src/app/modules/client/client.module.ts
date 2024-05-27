@@ -4,9 +4,10 @@ import { ClientComponent } from './client.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClientRoutingModule } from './client-routing.module';
+import { CreateClientComponent } from './create-client/create-client.component';
 
 @NgModule({
-  declarations: [ClientComponent],
+  declarations: [ClientComponent, CreateClientComponent],
   imports: [
     CommonModule,
     FormsModule,

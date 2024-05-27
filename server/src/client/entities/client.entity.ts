@@ -20,6 +20,9 @@ export class Client {
   @Column({ unique: true })
   token: string;
 
+  @Column({ nullable: true })
+  os: string;
+
   @Column({ default: Role.Client })
   Role: Role;
 

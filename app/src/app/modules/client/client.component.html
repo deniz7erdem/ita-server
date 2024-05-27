@@ -8,7 +8,9 @@
         <span class="badge bg-success me-2"
           >Toplam İstemci: {{ onlineClients | async }}</span
         >
-        <button class="btn btn-primary">İstemci Ekle</button>
+        <button class="btn btn-primary" (click)="openCreateClientModal()">
+          İstemci Ekle
+        </button>
       </div>
     </div>
     <div class="card mb-4">
@@ -30,7 +32,7 @@
             <tr>
               <td>{{ client.id }}</td>
               <td>{{ client.name }}</td>
-              <td>Ubuntu 22.04 (LTS) x64</td>
+              <td>Ubuntu 22.04 (LTS) x64 {{ client.os }}</td>
               <td>192.168.1.10</td>
               <td><span class="badge bg-success">Aktif</span></td>
               <td>{{ client.createdAt.toLocaleString() }}</td>

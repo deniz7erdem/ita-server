@@ -48,6 +48,10 @@ export class ClientController {
     return this.clientService.update(+id, updateClientDto);
   }
 
+  updateOS(@Body() body: { token: string; os: string }) {
+    return this.clientService.updateOS(body.token, body.os);
+  }
+
   @Roles(Role.Admin)
   @Delete(':id')
   remove(@Param('id') id: string) {
