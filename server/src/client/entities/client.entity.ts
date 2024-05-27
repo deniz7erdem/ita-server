@@ -23,8 +23,14 @@ export class Client {
   @Column({ nullable: true })
   os: string;
 
+  @Column({ nullable: true })
+  ip: string;
+
+  @Column({ nullable: true })
+  lastActiveAt: Date;
+
   @Column({ default: Role.Client })
-  Role: Role;
+  role: Role;
 
   @CreateDateColumn()
   createdAt: Date;

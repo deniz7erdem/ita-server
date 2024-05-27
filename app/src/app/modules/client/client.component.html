@@ -32,8 +32,8 @@
             <tr>
               <td>{{ client.id }}</td>
               <td>{{ client.name }}</td>
-              <td>Ubuntu 22.04 (LTS) x64 {{ client.os }}</td>
-              <td>192.168.1.10</td>
+              <td>{{ client.os }}</td>
+              <td>{{ client.ip }}</td>
               <td><span class="badge bg-success">Aktif</span></td>
               <td>{{ client.createdAt | date : "dd/MM/yyyy HH:mm" }}</td>
               <td>

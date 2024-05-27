@@ -27,7 +27,7 @@ export class ClientService {
 
   findAll() {
     return this.clientRepository.find({
-      select: ['id', 'name', 'os', 'createdAt', 'updatedAt', 'deletedAt'],
+      select: ['id', 'name', 'os','ip', 'createdAt','lastActiveAt'],
     });
   }
 
@@ -43,8 +43,16 @@ export class ClientService {
     return `This action updates a #${id} client`;
   }
 
-  updateOS(token: string, os: string) {
-    return this.clientRepository.update({ token }, { os });
+  updateOS(id: number, os: string) {
+    return this.clientRepository.update({ id }, { os });
+  }
+
+  updateIP(id: number, ip: string) {
+    return this.clientRepository.update({ id }, { ip });
+  }
+
+  updateLastActiveAt(id: number) {
+    return this.clientRepository.update({ id }, { lastActiveAt: new Date() });
   }
 
   remove(id: number) {
