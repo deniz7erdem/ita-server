@@ -14,7 +14,11 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="submit">Kaydet</button>
-    <button class="btn btn-secondary" (click)="activeModal.close()">
+    <button
+      class="btn btn-secondary"
+      type="button"
+      (click)="activeModal.close()"
+    >
       Kapat
     </button>
   </div>
@@ -24,9 +28,7 @@
   <h3>İstemci Eklendi</h3>
   <div class="mb-3"><b>İsim:</b> {{ createdClient.name }}</div>
   <div class="mb-3"><b>Token:</b> {{ createdClient.token }}</div>
-  <p>
-    Token'ı istemciye girerek kaydı tamamlayabilirsiniz.
-  </p>
+  <p>Token'ı istemciye girerek kaydı tamamlayabilirsiniz.</p>
 </div>
 <div class="modal-footer" *ngIf="createdClient">
   <button class="btn btn-secondary" (click)="activeModal.close()">Kapat</button>

@@ -38,7 +38,9 @@ export class AuthService {
       throw new UnauthorizedException('Wrong token');
     }
     if (loginClientDto.token == client.token) {
-      return { access_token: this.jwtService.sign({ id: client.id }) };
+      const { token, ...res } = client;
+      return { access_token: this.jwtService.sign(res) };
     }
+    throw new UnauthorizedException('Wrong token');
   }
 }

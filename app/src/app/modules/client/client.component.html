@@ -35,9 +35,12 @@
               <td>Ubuntu 22.04 (LTS) x64 {{ client.os }}</td>
               <td>192.168.1.10</td>
               <td><span class="badge bg-success">Aktif</span></td>
-              <td>{{ client.createdAt.toLocaleString() }}</td>
+              <td>{{ client.createdAt | date : "dd/MM/yyyy HH:mm" }}</td>
               <td>
-                <button class="btn btn-secondary">
+                <button
+                  class="btn btn-secondary"
+                  (click)="openDetailClientModal(client)"
+                >
                   <i class="bi bi-sliders"></i>
                 </button>
               </td>
