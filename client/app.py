@@ -3,6 +3,7 @@ import subprocess
 import requests
 import platform
 import json
+import os
 
 env = open('./env.json', 'r')
 login_data = json.load(env)
@@ -13,6 +14,7 @@ apiUrl = "http://localhost:3000"
 
 response = requests.post(apiUrl+'/auth/loginClient', json=login_data)
 
+# defined jobs
 def myOS():
     osName = platform.system() + ' ' + platform.release()
     print(f'OS: {osName}')
@@ -28,7 +30,10 @@ def myIP():
 def updateLastActiveAt():
     last = requests.post(apiUrl+'/client/update-last-active-at', headers={'Authorization': f'Bearer {token}'})
     print(last.json())
+# end of defined jobs
 
+
+# authenticate
 if response.status_code == 200:
     token = response.json()['access_token']
     print(f'Token: {token}')
@@ -38,7 +43,7 @@ if response.status_code == 200:
 else:
     print("Failed to authenticate")
     exit()
-
+# end of authenticate
 
 sio = socketio.Client()
 
@@ -50,6 +55,15 @@ def connect():
 def disconnect():
     print('Disconnected from server')
     updateLastActiveAt()
+
+@sio.event
+def runDefinedJob(data):
+    print(f'Received defined job: {data}')
+    updateLastActiveAt()
+    if data == 'reboot':
+        os.system("shutdown /r /t 1")
+    elif data == 'poweroff':
+        os.system("shutdown /s /t 1")
 
 @sio.event
 def runScript(script):
