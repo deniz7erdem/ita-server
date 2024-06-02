@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { HttpCode, HttpException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import {
   SubscribeMessage,
@@ -29,13 +29,14 @@ export class SocketGateway {
 
     try {
       const payload = this.jwtService.verify(token);
-      console.log(payload);
       if (payload.role == 'admin') {
         this.server.emit('onlineClients', this.onlineClients);
+        this.server.emit('onlineList', [...this.clients.keys()]);
         return;
       }
       this.clients.set(payload.id, client.id);
       this.server.emit('onlineClients', ++this.onlineClients);
+      this.server.emit('onlineList', [...this.clients.keys()]);
       this.logger.log(`Client connected: ${client.id}, User ID: ${payload.id}`);
     } catch (error) {
       client.disconnect();
@@ -45,13 +46,14 @@ export class SocketGateway {
   handleDisconnect(client: Socket) {
     const token = client.handshake.headers.authorization?.split(' ')[1];
     const payload = this.jwtService.verify(token);
-    console.log(payload);
     if (payload.role == 'admin') {
       this.server.emit('onlineClients', this.onlineClients);
+      this.server.emit('onlineList', [...this.clients.keys()]);
       return;
     }
     this.clients.delete(client.id);
     this.server.emit('onlineClients', --this.onlineClients);
+    this.server.emit('onlineList', [...this.clients.keys()]);
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
@@ -59,15 +61,27 @@ export class SocketGateway {
     this.logger.log('Init');
   }
 
+  sendDefinedJobToPython(clientId: number, job: string) {
+    const clientSocketId = this.clients.get(clientId);
+    if (clientSocketId) {
+      this.server.to(clientSocketId).emit('runDefinedJob', job);
+      this.logger.log(`Defined job sent to Python client`);
+      return HttpCode(200);
+    } else {
+      this.logger.warn(`Python client not connected`);
+      return new HttpException('Client not connected', 400);
+    }
+  }
+
   sendScriptToPython(clientId: number, script: string) {
     const clientSocketId = this.clients.get(clientId);
     if (clientSocketId) {
       this.server.to(clientSocketId).emit('runScript', script);
       this.logger.log(`Script sent to Python client`);
-      return 'OK';
+      return HttpCode(200);
     } else {
-      this.logger.warn(`Python client not connected`);
-      return 'sad';
+      this.logger.warn(`Client not connected`);
+      return new HttpException('Client not connected', 400);
     }
   }
 }

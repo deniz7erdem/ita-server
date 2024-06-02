@@ -80,4 +80,11 @@ export class ClientController {
   script(@Body() body: { clientId: number; script: string }) {
     this.socketGateway.sendScriptToPython(body.clientId, body.script);
   }
+
+  @Roles(Role.Admin)
+  @Post('run-defined-job')
+  @HttpCode(200)
+  definedJob(@Body() body: { clientId: number; job: string }) {
+    this.socketGateway.sendDefinedJobToPython(body.clientId, body.job);
+  }
 }
