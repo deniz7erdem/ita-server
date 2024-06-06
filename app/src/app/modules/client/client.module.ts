@@ -7,9 +7,10 @@ import { ClientRoutingModule } from './client-routing.module';
 import { CreateClientComponent } from './create-client/create-client.component';
 import { DetailClientComponent } from './detail-client/detail-client.component';
 import { LogsClientComponent } from './detail-client/logs-client/logs-client.component';
+import { ConfirmationModalComponent } from './detail-client/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
-  declarations: [ClientComponent, CreateClientComponent, DetailClientComponent, LogsClientComponent],
+  declarations: [ClientComponent, CreateClientComponent, DetailClientComponent, LogsClientComponent, ConfirmationModalComponent],
   imports: [
     CommonModule,
     FormsModule,

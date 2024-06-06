@@ -34,7 +34,13 @@
               <td>{{ client.name }}</td>
               <td>{{ client.os }}</td>
               <td>{{ client.ip }}</td>
-              <td><span class="badge bg-success">Aktif</span></td>
+              <td>
+                <span
+                  class="badge"
+                  [ngClass]="client.online ? 'bg-success' : 'bg-danger'"
+                  >{{ client.online ? "Çevrim İçi" : "Çevrim Dışı" }}</span
+                >
+              </td>
               <td>{{ client.createdAt | date : "dd/MM/yyyy HH:mm" }}</td>
               <td>
                 <button

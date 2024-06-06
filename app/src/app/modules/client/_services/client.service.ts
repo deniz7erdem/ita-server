@@ -25,6 +25,14 @@ export class ClientService {
     });
   }
 
+  getOnlineList(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('onlineList', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
   getAll(): Observable<Client[]> {
     return this.http.get<Client[]>(`${this.apiUrl}/client`, {
       headers: {
@@ -39,5 +47,17 @@ export class ClientService {
         Authorization: `Bearer ${localStorage.getItem('authToken')}`,
       },
     });
+  }
+
+  sendDefinedJob(jobName: string, clientId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/client/run-defined-job`,
+      { clientId, job: jobName },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+        },
+      }
+    );
   }
 }

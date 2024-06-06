@@ -51,11 +51,15 @@
     <h5>İşlemler</h5>
     <div class="col-md-12 d-flex justify-content-evenly">
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button class="btn btn-outline-primary">
+        <button
+          class="btn btn-outline-primary"
+          (click)="sendDefinedJob('reboot')"
+        >
           <i class="bi bi-arrow-repeat"></i>
           Yeniden Başlat
         </button>
-        <button class="btn btn-outline-danger">
+        <button class="btn btn-outline-danger"
+        (click)="sendDefinedJob('poweroff')">
           <i class="bi bi-power"></i>
           Kapat
         </button>
@@ -72,19 +76,6 @@
           Özel Script
         </button>
       </div>
-    </div>
-  </div>
-  <!-- <hr /> -->
-  <!-- Log -->
-  <div class="card mt-3" *ngIf="activeTab == 'logs'">
-    <h5 class="card-header">Loglar</h5>
-    <div class="col-md-12 bg-dark text-light card-body">
-      <pre>
-[2021-10-10 12:00:00] [INFO] [Client] [] [Client is online]
-[2021-10-10 12:00:00] [INFO] [Client] [] [Client is online]
-[2021-10-10 12:00:00] [INFO] [Client] [] [Client is online]
-        </pre
-      >
     </div>
   </div>
 </div>
