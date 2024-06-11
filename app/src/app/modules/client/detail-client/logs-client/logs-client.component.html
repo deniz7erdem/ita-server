@@ -1,9 +1,12 @@
 <div class="modal-header">Loglar</div>
 <div class="modal-body bg-dark text-white-50">
-  <pre>
-<ng-container *ngFor="let i of logs">{{i}}
-</ng-container>
-    </pre>
+  <code>
+    <ng-container *ngFor="let i of logs"
+      ><div [class]="'text-'+i.level">
+        [{{ i.createdAt | date : "short" }}]{{ i.message }}
+      </div>
+    </ng-container>
+  </code>
 </div>
 <div class="modal-footer">
   <button class="btn btn-secondary" (click)="activeModal.close()">Kapat</button>
