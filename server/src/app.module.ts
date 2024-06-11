@@ -9,6 +9,8 @@ import { ClientModule } from './client/client.module';
 import { User } from './user/entities/user.entity';
 import { Client } from './client/entities/client.entity';
 import { SocketGateway } from './socket/socket.gateway';
+import { LogModule } from './log/log.module';
+import { Log } from './log/entities/log.entity';
 
 @Module({
   imports: [
@@ -22,13 +24,15 @@ import { SocketGateway } from './socket/socket.gateway';
       database: process.env.DB_NAME,
       entities: [
         User,
-        Client
+        Client,
+        Log
       ],
       synchronize: true,
     }),
     AuthModule,
     UserModule,
     ClientModule,
+    LogModule,
   ],
   controllers: [AppController],
   providers: [AppService, SocketGateway],

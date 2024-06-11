@@ -1,10 +1,11 @@
 import { Role } from 'src/auth/role.enum';
-import { User } from 'src/user/entities/user.entity';
+import { Log } from 'src/log/entities/log.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -31,6 +32,9 @@ export class Client {
 
   @Column({ default: Role.Client })
   role: Role;
+
+  @OneToMany(() => Log, (log) => log.client)
+  logs: Log[];
 
   @CreateDateColumn()
   createdAt: Date;
