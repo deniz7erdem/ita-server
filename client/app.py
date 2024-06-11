@@ -32,6 +32,15 @@ def updateLastActiveAt():
     print(last.json())
 # end of defined jobs
 
+# log function
+# levels: success, info, warning, danger
+
+def log(message,level):
+    logres = requests.post(apiUrl+'/log', json={'message': message,'level': level}, headers={'Authorization': f'Bearer {token}'})
+    print(logres.json())
+
+# end of log function
+
 
 # authenticate
 if response.status_code == 200:
@@ -40,6 +49,7 @@ if response.status_code == 200:
     myOS()
     myIP()
     updateLastActiveAt()
+    log('Authenticated', 'success')
 else:
     print("Failed to authenticate")
     exit()
@@ -50,23 +60,32 @@ sio = socketio.Client()
 @sio.event
 def connect():
     print('Connection established')
+    log('Connected to webSocket', 'success')
 
 @sio.event
 def disconnect():
     print('Disconnected from server')
+    log('Disconnected from webSocket', 'danger')
     updateLastActiveAt()
 
 @sio.event
 def runDefinedJob(data):
+    log('Received defined job', 'info')
     print(f'Received defined job: {data}')
     updateLastActiveAt()
     if data == 'reboot':
         os.system("shutdown /r /t 1")
+        log('Rebooting', 'success')
     elif data == 'poweroff':
         os.system("shutdown /s /t 1")
+        log('Powering off', 'success')
+    else:
+        print('Unknown job')
+        log(f'Unknown job: {data}', 'danger')
 
 @sio.event
 def runScript(script):
+    log('Received script', 'info')
     print(f'Received script: {script}')
     updateLastActiveAt()
     try:
@@ -74,11 +93,17 @@ def runScript(script):
         output = result.stdout
         error = result.stderr
         if output:
+            log(f'Script Output: {output}', 'success')
             print(f'Script Output: {output}')
+            sio.emit('scriptResult', {'client':login_data,'output':output})
         if error:
+            log(f'Script Error: {error}', 'danger')
             print(f'Script Error: {error}')
+            sio.emit('scriptResult', {'client':login_data,'output':output})
     except Exception as e:
+        log(f'Error running script: {e}', 'danger')
         print(f'Error running script: {e}')
+        sio.emit('scriptResult', {'client':login_data,'output':output})
 
 
 
