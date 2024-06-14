@@ -19,8 +19,10 @@ export class LogService {
     let tomorrow = new Date(now);
     tomorrow.setDate(now.getDate() - 1);
     return this.logRepository.find({
-      where: { client: { id }, createdAt: Between(tomorrow, now) },
-      order: { createdAt: 'DESC' },
+      where: { client: { id }, 
+      // createdAt: Between(tomorrow, now)
+     },
+      order: { createdAt: 'ASC' },
       take: 20,
     });
   }
